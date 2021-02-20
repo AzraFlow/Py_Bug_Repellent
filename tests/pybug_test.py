@@ -89,6 +89,10 @@ def test_ilthbl_return__high_low_bytes():
     hilo_bytes = int_list_to_hilo_bytes(int_list)
     assert hilo_bytes == (0, 15)
 
+    int_list2 = [256, 1, 2, 3, 4, 5]
+    hilo_bytes2 = int_list_to_hilo_bytes(int_list2)
+    assert hilo_bytes2 == (1, 15)
+
 
 def test_hex_to_repellent_code():
     '''

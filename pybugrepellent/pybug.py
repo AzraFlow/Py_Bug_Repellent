@@ -56,7 +56,8 @@ def int_list_to_hilo_bytes(int_list):
     num_total = 0
     for num in int_list:
         num_total += num
-        hi_byte = int(num_total/256)
+        # hi_byte = int(num_total/256)
+        hi_byte = int(num_total >> 8)
         lo_byte = num_total - hi_byte * 256
     return (hi_byte, lo_byte)
 
@@ -72,8 +73,7 @@ def hex_to_repellent_code(hex_value):
                       "c": "M", "d": "N", "e": "O", "f": "P",
                       }
     right_two = str(hex_value)[-2:]
-    right_two_to_alpha = hex_alpha_dict[right_two[0]] + hex_alpha_dict[right_two[1]]
-    return right_two_to_alpha
+    return hex_alpha_dict[right_two[0]] + hex_alpha_dict[right_two[1]]
 
 
 def repellent_code_to_hex(code):
@@ -89,8 +89,8 @@ def repellent_code_to_hex(code):
 
     alpha_hex_dict = {value: key for (key, value) in hex_alpha_dict.items()}
 
-    code = "0x" + alpha_hex_dict[code[0]] + alpha_hex_dict[code[1]]
-    return code
+    return "0x" + alpha_hex_dict[code[0]] + alpha_hex_dict[code[1]]
+
 
 
 '''
