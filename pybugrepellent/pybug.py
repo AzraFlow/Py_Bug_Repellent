@@ -1,3 +1,4 @@
+import re
 try:
     from pybugrepellent.basic_to_chr import chr_dict
 except ModuleNotFoundError:
@@ -56,29 +57,18 @@ def charlist_to_code_list(charlist):
     Function to accept a line of code as a string and return
     a list of corresponding c64 petscii codes as integers.
     '''
+    str_split = re.split(r"\{\w{2}\}", charlist)
+    code_split = re.findall(r"\{\w{2}\}", charlist)
+    code_split.append('')  # Set proper list length to use count enumerate
+
     codelist = []
 
-    if len(charlist) <= 3:
-        for i in range(len(charlist)):
-            char = charlist[i]
+    for count, segment in enumerate(str_split):
+        for char in segment:
             codelist.append(int(chr_dict[char]))
-    else:
-        for i in range(len(charlist)):
-            if charlist[i] == "{":
-                char = charlist[i:i+4]
-                codelist.append(int(chr_dict[char]))
-            elif charlist[i - 1] == "{":
-                continue
-            elif charlist[i - 2] == "{":
-                continue
-            elif charlist[i - 3] == "{":
-                continue
-            elif charlist[i] == "}":
-                error = "Closing brace"
-                return error
-            else:
-                char = charlist[i]
-                codelist.append(int(chr_dict[char]))
+        codelist.append(int(chr_dict[code_split[count]]))
+    # Remove codes for "" in string    
+    codelist = [x for x in codelist if x != 191]
     return codelist
 
 

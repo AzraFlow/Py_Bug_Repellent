@@ -65,6 +65,7 @@ def test_ctcl_ahoy_special_chars():
                                   156, 157, 158, 159, 160]
 
 
+"""
 def test_ctcl_detect_leading_closing_brace():
     '''
     Unit test to check the charlist_to_code_list() function
@@ -76,8 +77,8 @@ def test_ctcl_detect_leading_closing_brace():
     '''
     leading_close_brace = "AB}{WH}"
     code_list_close_brace = charlist_to_code_list(leading_close_brace)
-    assert code_list_close_brace == "Closing brace"
-
+    assert code_list_close_brace == "Brace character error."
+"""
 
 def test_ilthbl_return__high_low_bytes():
     '''
