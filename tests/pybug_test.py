@@ -1,7 +1,7 @@
-from pybugrepellent.pybug import charlist_to_code_list
-from pybugrepellent.pybug import int_list_to_hilo_bytes
-from pybugrepellent.pybug import hex_to_repellent_code
-from pybugrepellent.pybug import repellent_code_to_hex
+from pybugrepellent.pybug import charlist_to_code_list,  \
+                                 int_list_to_hilo_bytes, \
+                                 hex_to_repellent_code,  \
+                                 repellent_code_to_hex
 
 
 def test_ctcl_short_string():

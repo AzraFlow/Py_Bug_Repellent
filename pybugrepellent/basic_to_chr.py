@@ -197,6 +197,9 @@ chr_dict = {
 # CODES 224-254 SAME AS 160-190
 # CODE 255 SAME AS 126
 
+if __name__ == "__main__":
+    pass
+
 """ Reference data:
 
     '\ufffe'   0 #  0x00 -> UNDEFINED
