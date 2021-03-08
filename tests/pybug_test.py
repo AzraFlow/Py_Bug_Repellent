@@ -57,7 +57,10 @@ def test_ctcl_ahoy_special_chars():
     check for detection and accuracy of all Ahoy special
     characters represented within braces.
     '''
-    all_spec_char = "{WH}{CD}{RV}{HM}{RD}{CR}{GN}{BL}{OR}{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{BK}{CU}{RO}{SC}{IN}{BR}{LR}{G1}{G2}{LG}{LB}{G3}{PU}{CL}{YL}{CY}{SS}"
+    all_spec_char = "{WH}{CD}{RV}{HM}{RD}{CR}{GN}{BL}{OR}{F1}{F2}\
+{F3}{F4}{F5}{F6}{F7}{F8}{BK}{CU}{RO}\
+{SC}{IN}{BR}{LR}{G1}{G2}{LG}{LB}{G3}\
+{PU}{CL}{YL}{CY}{SS}"
     all_spec_char_list = charlist_to_code_list(all_spec_char)
     assert all_spec_char_list == [5, 17, 18, 19, 28, 29, 30, 31, 129, 133, 134,
                                   135, 136, 137, 138, 139, 140, 144, 145, 146,
@@ -65,20 +68,26 @@ def test_ctcl_ahoy_special_chars():
                                   156, 157, 158, 159, 160]
 
 
-"""
-def test_ctcl_detect_leading_closing_brace():
+
+def test_ctcl_detect_loose_braces():
     '''
     Unit test to check the charlist_to_code_list() function
     for proper conversion of a line of code to a list of
     corresponding c64 petscii codes as integers.  Focus on
-    check for detection and error reporting of leading
-    closing brace character "}" - a condition that should
-    never happen in properly typed in code.
+    check for detection and error reporting of loose brace
+    characters "}" or "{" - conditions that should
+    never happen in properly typed in Ahoy code.
     '''
-    leading_close_brace = "AB}{WH}"
-    code_list_close_brace = charlist_to_code_list(leading_close_brace)
-    assert code_list_close_brace == "Brace character error."
-"""
+    loose_close_brace = "AB}{WH}"
+    close_brace_error = charlist_to_code_list(loose_close_brace)
+    assert close_brace_error == "Loose brace error."
+
+    loose_open_brace = "{AB {WH}"
+    open_brace_error = charlist_to_code_list(loose_open_brace)
+    assert open_brace_error == "Loose brace error."
+
+
+
 
 def test_ilthbl_return__high_low_bytes():
     '''
