@@ -1,3 +1,6 @@
+import re
+# Import try/except used because different path to basic_to_chr module is
+# used depending on if pybug is loaded or imported
 try:
     from pybugrepellent.basic_to_chr import chr_dict
 except ModuleNotFoundError:
@@ -19,66 +22,35 @@ def ahoy_text_to_line_strings():
 
     return list(zip(code_lines1, key_lines1))
 
-"""
-def charlist_to_code_list(charlist):
-    '''
-    Function to accept a line of code as a string and return
-    a list of corresponding c64 petscii codes as integers.
-    '''
-    codelist = []
-    # Should rewrite this using regex to recognize proper braced char codes
-    if len(charlist) <= 3:
-        for i in range(len(charlist)):
-            char = charlist[i]
-            codelist.append(int(chr_dict[char]))
-    else:
-        for i in range(len(charlist)):
-            if charlist[i] == "{":
-                char = charlist[i:i+4]
-                codelist.append(int(chr_dict[char]))
-            elif charlist[i - 1] == "{":
-                continue
-            elif charlist[i - 2] == "{":
-                continue
-            elif charlist[i - 3] == "{":
-                continue
-            elif charlist[i] == "}":
-                error = "Closing brace"
-                return error
-            else:
-                char = charlist[i]
-                codelist.append(int(chr_dict[char]))
-    return codelist
-"""
 
 def charlist_to_code_list(charlist):
     '''
     Function to accept a line of code as a string and return
     a list of corresponding c64 petscii codes as integers.
     '''
+    # Split charlist at special character entries of form '{xx}', store in list
+    str_split = re.split(r"\{\w{2}\}", charlist)
+    # Check for loose braces in each substring, return error statement if found
+    for sub_str in str_split:
+        loose_brace = re.search(r"\}|\{", sub_str)
+        if loose_brace is not None:
+            return "Loose brace error."
+    # Create list of special character code strings
+    code_split = re.findall(r"\{\w{2}\}", charlist)
+    # Set proper list length to use count enumerate
+    code_split.append('')
+
+    # Create list of codes corresponding to each character in string passed in
     codelist = []
 
-    if len(charlist) <= 3:
-        for i in range(len(charlist)):
-            char = charlist[i]
+    # Build list of ascii codes for string segments with codes for special
+    # characters inserted at the string splits
+    for count, segment in enumerate(str_split):
+        for char in segment:
             codelist.append(int(chr_dict[char]))
-    else:
-        for i in range(len(charlist)):
-            if charlist[i] == "{":
-                char = charlist[i:i+4]
-                codelist.append(int(chr_dict[char]))
-            elif charlist[i - 1] == "{":
-                continue
-            elif charlist[i - 2] == "{":
-                continue
-            elif charlist[i - 3] == "{":
-                continue
-            elif charlist[i] == "}":
-                error = "Closing brace"
-                return error
-            else:
-                char = charlist[i]
-                codelist.append(int(chr_dict[char]))
+        codelist.append(int(chr_dict[code_split[count]]))
+    # Remove codes for "" in found in the string
+    codelist = [x for x in codelist if x != int(chr_dict[""])]
     return codelist
 
 
@@ -99,10 +71,10 @@ def int_list_to_hilo_bytes(int_list):
 def int_list_to_XOR_csum(int_list):
     '''
     '''
-    num_xor = 255
+    num_xor = 0
     for num in int_list:
-        num_xor = num_xor ^ num
-        return num_xor
+        num_xor ^= num
+    return num_xor
 
 
 def hex_to_repellent_code(hex_value):
@@ -143,6 +115,9 @@ def main():
     '''
     for codeline, keyline in ahoy_text_to_line_strings():
         code_list = charlist_to_code_list(codeline)
+        if code_list == "Loose brace error.":
+            print("Loose brace error in", codeline)
+            break 
         hilo_bytes = int_list_to_hilo_bytes(code_list)
         xor_hilo = hilo_bytes[0] ^ hilo_bytes[1]
         hex_xor_hilo = hex(xor_hilo)
@@ -151,7 +126,8 @@ def main():
         key_hex = repellent_code_to_hex(keyline)
         key_int = int(key_hex, 16)
 
-        row = [xor_hilo, hex_xor_hilo, hex_to_repellent, key_int, key_hex, keyline]
+        row = [xor_hilo, hex_xor_hilo, hex_to_repellent, key_int, key_hex, 
+               keyline]
 
         print(codeline, hilo_bytes)
         print("{:4} {:4} {:4} {:4} {:4} {:4}".format(*row))
