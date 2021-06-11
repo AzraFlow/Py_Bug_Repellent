@@ -21,7 +21,7 @@ in the mid-eighties to check the accuracy of programs
 typed-in from the magazine.  Line codes were printed
 in the magazine after each program listing to check
 against the output of Bug Repellent to quickly identify
-lines that had errors.  Excerpt from the magazine 
+lines that had errors.  See excerpt from the magazine 
 below:
 
 ******************************************************
