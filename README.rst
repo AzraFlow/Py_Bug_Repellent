@@ -16,7 +16,7 @@ How to Use
 Background
 ----------
 
-Bug Repellent is a utility printed in Ahoy! magazine
+Bug Repellent was a utility printed in Ahoy! magazine
 in the mid-eighties to check the accuracy of programs
 typed-in from the magazine.  Line codes were printed
 in the magazine after each program listing to check
@@ -53,5 +53,5 @@ If you spot a difference, an error exists in the line.
 Jot down the numbers of lines where contradictions
 occur, LIST each line, spot the errors, and correct
 them.
- ******************************************************
+******************************************************
 
