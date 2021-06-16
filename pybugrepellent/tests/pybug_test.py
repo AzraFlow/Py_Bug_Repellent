@@ -57,16 +57,15 @@ def test_ctcl_ahoy_special_chars():
     check for detection and accuracy of all Ahoy special
     characters represented within braces.
     '''
-    all_spec_char = "{WH}{CD}{RV}{HM}{RD}{CR}{GN}{BL}{OR}{F1}{F2}\
-{F3}{F4}{F5}{F6}{F7}{F8}{BK}{CU}{RO}\
-{SC}{IN}{BR}{LR}{G1}{G2}{LG}{LB}{G3}\
-{PU}{CL}{YL}{CY}{SS}"
+    all_spec_char = ("{WH}{CD}{RV}{HM}{RD}{CR}{GN}{BL}{OR}{F1}{F2}" +
+                     "{F3}{F4}{F5}{F6}{F7}{F8}{BK}{CU}{RO}" +
+                     "{SC}{IN}{BR}{LR}{G1}{G2}{LG}{LB}{G3}" +
+                     "{PU}{CL}{YL}{CY}{SS}")
     all_spec_char_list = charlist_to_code_list(all_spec_char)
     assert all_spec_char_list == [5, 17, 18, 19, 28, 29, 30, 31, 129, 133, 134,
                                   135, 136, 137, 138, 139, 140, 144, 145, 146,
                                   147, 148, 149, 150, 151, 152, 153, 154, 155,
                                   156, 157, 158, 159, 160]
-
 
 
 def test_ctcl_detect_loose_braces():
