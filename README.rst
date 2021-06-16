@@ -11,7 +11,7 @@ Documentation
 -------------
 
 How to Use
-^^^^^^^^^^
+----------
 
 Background
 ----------
